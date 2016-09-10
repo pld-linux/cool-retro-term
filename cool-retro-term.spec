@@ -5,7 +5,7 @@
 Summary:	A good looking terminal emulator which mimics the old cathode display
 Name:		cool-retro-term
 Version:	1.0.0
-Release:	0.3
+Release:	1
 License:	GPL-3.0+
 Group:		X11/Applications
 Source0:	https://github.com/Swordfish90/cool-retro-term/archive/v%{version}/%{name}-%{version}.tar.gz
