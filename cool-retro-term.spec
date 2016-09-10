@@ -5,7 +5,7 @@
 Summary:	A good looking terminal emulator which mimics the old cathode display
 Name:		cool-retro-term
 Version:	1.0.0
-Release:	0.2
+Release:	0.3
 License:	GPL-3.0+
 Group:		X11/Applications
 Source0:	https://github.com/Swordfish90/cool-retro-term/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -18,8 +18,10 @@ BuildRequires:	Qt5Declarative-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel >= %{qtver}
 BuildRequires:	Qt5Quick-devel >= %{qtver}
 BuildRequires:	desktop-file-utils
-Requires:	Qt5Quick-controls
-Requires:	Qt5Quick-graphicaleffects
+Requires:	Qt5Gui-platform-xcb-egl >= %{qtver}
+Requires:	Qt5Gui-platform-xcb-glx >= %{qtver}
+Requires:	Qt5Quick-controls >= %{qtver}
+Requires:	Qt5Quick-graphicaleffects >= %{qtver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
