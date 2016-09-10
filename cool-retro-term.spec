@@ -18,6 +18,9 @@ BuildRequires:	Qt5Declarative-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel >= %{qtver}
 BuildRequires:	Qt5Quick-devel >= %{qtver}
 BuildRequires:	desktop-file-utils
+BuildRequires:	libstdc++-devel
+BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	qt5-qmake >= %{qtver}
 Requires:	Qt5Gui-platform-xcb-egl >= %{qtver}
 Requires:	Qt5Gui-platform-xcb-glx >= %{qtver}
 Requires:	Qt5Quick-controls >= %{qtver}
