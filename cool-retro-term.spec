@@ -18,6 +18,8 @@ BuildRequires:	Qt5Declarative-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel >= %{qtver}
 BuildRequires:	Qt5Quick-devel >= %{qtver}
 BuildRequires:	desktop-file-utils
+Requires:	Qt5Quick-controls
+Requires:	Qt5Quick-graphicaleffects
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
