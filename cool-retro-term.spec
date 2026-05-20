@@ -4,26 +4,29 @@
 %define	qtver	5.2
 Summary:	A good looking terminal emulator which mimics the old cathode display
 Name:		cool-retro-term
-Version:	1.0.0
-Release:	2
+Version:	1.2.0
+Release:	1
 License:	GPL-3.0+
 Group:		X11/Applications
-Source0:	https://github.com/Swordfish90/cool-retro-term/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	06e73fbffcb5fd55695e5ec4034e3ad1
-Source1:	https://github.com/Swordfish90/qmltermwidget/archive/490eeaf195cd5764a3798c2a2340ced648db4526/qmltermwidget.tar.gz
-# Source1-md5:	64d5f6ee2f8d01512209f211d2533e7d
+Source0:	https://github.com/Swordfish90/cool-retro-term/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	3e8019a01c619bfd09014bad62bbe432
+Source1:	https://github.com/Swordfish90/qmltermwidget/archive/63228027e1f97c24abb907550b22ee91836929c5/qmltermwidget.tar.gz
+# Source1-md5:	2e095e89b81b7ab90e7fd53b055fb383
 URL:		https://github.com/Swordfish90/cool-retro-term
 BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5Declarative-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel >= %{qtver}
+BuildRequires:	Qt5Qml-devel >= %{qtver}
+BuildRequires:	Qt5Quick-controls2-devel >= %{qtver}
 BuildRequires:	Qt5Quick-devel >= %{qtver}
+BuildRequires:	Qt5Sql-devel >= %{qtver}
+BuildRequires:	Qt5Widgets-devel >= %{qtver}
 BuildRequires:	desktop-file-utils
 BuildRequires:	libstdc++-devel
 BuildRequires:	qt5-build >= %{qtver}
 BuildRequires:	qt5-qmake >= %{qtver}
 Requires:	Qt5Gui-platform-xcb-egl >= %{qtver}
 Requires:	Qt5Gui-platform-xcb-glx >= %{qtver}
-Requires:	Qt5Quick-controls >= %{qtver}
+Requires:	Qt5Quick-controls2 >= %{qtver}
 Requires:	Qt5Quick-graphicaleffects >= %{qtver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -37,13 +40,17 @@ customizable, and reasonably lightweight.
 mv qmltermwidget-*/* qmltermwidget
 
 %build
-qmake-qt5
-%{__make} \
-	CXX="%{__cxx}"
+qmake-qt5 \
+	QMAKE_CFLAGS_RELEASE="%{rpmcflags} %{rpmcppflags}" \
+	QMAKE_CXX="%{__cxx}" \
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags} %{rpmcppflags}" \
+	QMAKE_LFLAGS_RELEASE="%{rpmldflags}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
+# qmltermwidget.pro installs QMLTermScrollbar.qml twice (assets + scrollbar) → parallel install races
+%{__make} -j1 install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
 desktop-file-install --dir=$RPM_BUILD_ROOT%{_desktopdir} %{name}.desktop
